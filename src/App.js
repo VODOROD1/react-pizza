@@ -3,27 +3,24 @@ import "./scss/app.scss";
 import Header from "./components/Header";
 import Categories from "./components/Categories";
 import Sort from "./components/Sort";
-import PizzaBlock from "./components/PizzaBlock";
+import PizzaBlock from "./components/PizzaBLock/PizzaBlock";
 // import PizzaData from './assets/pizza.json';
 import { useEffect, useState } from "react";
 
 function App() {
   useEffect(() => {
     fetch("https://63de507d9fa0d60060fc8e1c.mockapi.io/items")
-    .then((data) => {
-      return data.json();
-    })
-    .then((jsonData) => {
-      // setPizzaData(data);
-      debugger;
-      createPizzaBlocksArr(jsonData);
-    })
-  });
+      .then((data) => {
+        return data.json();
+      })
+      .then((jsonData) => {
+        createPizzaBlocksArr(jsonData);
+      });
+  },[]);
 
   let [pizzaBlocksArr, setPizzaBlocksArr] = useState();
 
   function createPizzaBlocksArr(PizzaData) {
-    debugger;
     let pizzaBlocksArr = PizzaData?.map((elem) => {
       return (
         <PizzaBlock
