@@ -2,11 +2,14 @@ import React, { useState } from "react";
 
 function PizzaBlock({ imageUrl, name, types, sizes, price, category, rating }) {
   let [count, setCount] = useState(0);
-  // const forceUpdate = React.useCallback(() => setCount({}), []);
+  let [activeType, setActiveType] = useState(0);
+  let [activeSize, setActiveSize] = useState(0);
 
   let onAdd = () => {
     setCount((prevCount) => prevCount + 1);
   };
+
+  let typesGlossary = ["тонкое", "традиционное"];
 
   return (
     <div className="pizza-block">
@@ -14,17 +17,34 @@ function PizzaBlock({ imageUrl, name, types, sizes, price, category, rating }) {
       <h4 className="pizza-block__title">{name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {types.map((typeId) => {
+            return (
+              <li
+                key={typeId}
+                className={activeType == typeId ? "active" : ""}
+                onClick={() => {
+                  setActiveType(typeId);
+                }}
+              >
+                {typesGlossary[typeId]}
+              </li>
+            );
+          })}
         </ul>
         <ul>
-          {
-            sizes.map(size => {
-                return (
-                    <li>{size}</li>
-                )
-            })
-          }
+          {sizes.map((size, index) => {
+            return (
+              <li
+                key={index}
+                className={activeSize == index ? "active" : ""}
+                onClick={() => {
+                  setActiveSize(index);
+                }}
+              >
+                {size}
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className="pizza-block__bottom">
