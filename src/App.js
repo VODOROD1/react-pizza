@@ -16,7 +16,7 @@ function App() {
             <Routes>
               <Route element={<Home />} path="/home" />
               <Route element={<Backet />} path="/backet" />
-              <Route element={<NotFound />} path="/notfound" />
+              <Route element={<NotFound />} path="/*" />
             </Routes>
           </div>
         </div>
