@@ -6,7 +6,7 @@ import Skeleton from "../components/PizzaBLock/Skeleton";
 import PizzaBlock from "../components/PizzaBLock/PizzaBlock";
 import Search from "../components/Search/Search";
 
-function Home() {
+function Home({ searchValue }) {
   let [isPizzaLoading, setIsPizzaLoading] = useState(true);
   let [pizzaData, setPizzaData] = useState();
 
@@ -29,7 +29,7 @@ function Home() {
     fetch(
       `https://63de507d9fa0d60060fc8e1c.mockapi.io/items?${
         categoryId > 0 ? `category=${categoryId}` : ""
-      }&sortBy=${choicenSort.sortProperty}&order=desc`
+      }&sortBy=${choicenSort.sortProperty}&order=desc&filter=${searchValue}`
     )
       .then((data) => {
         return data.json();
@@ -39,7 +39,7 @@ function Home() {
         setPizzaData(jsonData);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, choicenSort]);
+  }, [categoryId, choicenSort, searchValue]);
 
   return (
     <div className="container">
@@ -51,20 +51,30 @@ function Home() {
       <div className="content__items">
         {isPizzaLoading
           ? [1, 2, 3, 4, 5, 6].map((elem, index) => <Skeleton key={index} />)
-          : pizzaData?.map((elem) => {
-              return (
-                <PizzaBlock
-                  key={elem.id}
-                  imageUrl={elem.imageUrl}
-                  name={elem.name}
-                  types={elem.types}
-                  sizes={elem.sizes}
-                  price={elem.price}
-                  category={elem.category}
-                  rating={elem.rating}
-                />
-              );
-            })}
+          : pizzaData
+              ?.filter((elem) => {
+                if (
+                  elem.name.toLowerCase().includes(searchValue.toLowerCase())
+                ) {
+                  return true;
+                } else {
+                  return false;
+                }
+              })
+              .map((elem) => {
+                return (
+                  <PizzaBlock
+                    key={elem.id}
+                    imageUrl={elem.imageUrl}
+                    name={elem.name}
+                    types={elem.types}
+                    sizes={elem.sizes}
+                    price={elem.price}
+                    category={elem.category}
+                    rating={elem.rating}
+                  />
+                );
+              })}
       </div>
     </div>
   );

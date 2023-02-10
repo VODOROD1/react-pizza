@@ -1,9 +1,9 @@
 import React from "react";
 import pizzaSvg from "../assets/img/pizza-logo.svg";
 import { NavLink } from "react-router-dom";
-import Search from './Search/Search'
+import { Search } from "./Search/Search";
 
-function Header() {
+function Header({ searchValue, setSearchValue }) {
   return (
     <div className="header">
       <div className="container">
@@ -16,9 +16,10 @@ function Header() {
             </div>
           </div>
         </NavLink>
-        <Search>
-
-        </Search>
+        <Search
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        ></Search>
         <div className="header__cart">
           <a href="/cart.html" className="button button--cart">
             <span>520 ₽</span>

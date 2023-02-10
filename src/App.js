@@ -7,13 +7,18 @@ import NotFound from "./pages/NotFound";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
+  const [searchValue, setSearchValue] = useState("");
+
   return (
     <div className="App">
       <div className="wrapper">
-        <Header />
+        <Header
+          searchValue={searchValue}
+          setSearchValue={(newValue) => setSearchValue(newValue)}
+        />
         <div className="content">
           <Routes>
-            <Route element={<Home />} path="/home" />
+            <Route element={<Home searchValue={searchValue}/>} path="/home" />
             <Route element={<Backet />} path="/backet" />
             <Route element={<NotFound />} path="/*" />
           </Routes>
