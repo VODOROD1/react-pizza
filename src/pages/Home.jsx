@@ -4,7 +4,7 @@ import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBLock/Skeleton";
 import PizzaBlock from "../components/PizzaBLock/PizzaBlock";
-import Search from "../components/Search/Search";
+import Pagination from "../components/Pagination/Pagination";
 
 function Home({ searchValue }) {
   let [isPizzaLoading, setIsPizzaLoading] = useState(true);
@@ -73,9 +73,10 @@ function Home({ searchValue }) {
                     category={elem.category}
                     rating={elem.rating}
                   />
-                );
+                )
               })}
       </div>
+      <Pagination />
     </div>
   );
 }
