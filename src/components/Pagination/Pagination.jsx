@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
-import styles from './Pagination.module.scss';
+import styles from "./Pagination.module.scss";
 
-function Pagination({ itemsPerPage }) {
+function Pagination({ itemsPerPage, onChangePage }) {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
@@ -23,6 +23,8 @@ function Pagination({ itemsPerPage }) {
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );
     setItemOffset(newOffset);
+    debugger;
+    onChangePage(event.selected + 1);
   };
 
   return (
@@ -33,8 +35,8 @@ function Pagination({ itemsPerPage }) {
         nextLabel=">"
         previousLabel="<"
         onPageChange={handlePageClick}
-        pageRangeDisplayed={3}
-        pageCount={4}
+        pageRangeDisplayed={4}
+        pageCount={3}
         renderOnZeroPageCount={null}
       />
     </>

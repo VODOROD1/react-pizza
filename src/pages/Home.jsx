@@ -9,12 +9,12 @@ import Pagination from "../components/Pagination/Pagination";
 function Home({ searchValue }) {
   let [isPizzaLoading, setIsPizzaLoading] = useState(true);
   let [pizzaData, setPizzaData] = useState();
-
   let [categoryId, setCategoryId] = useState(0);
   let [choicenSort, choiceSort] = useState({
     name: "популярности",
     sortProperty: "rating",
   });
+  let [currentPage, setCurrentPage] = useState(1);
 
   function onSetCategoryId(value) {
     setCategoryId(value);
@@ -27,7 +27,7 @@ function Home({ searchValue }) {
   useEffect(() => {
     setIsPizzaLoading(true);
     fetch(
-      `https://63de507d9fa0d60060fc8e1c.mockapi.io/items?${
+      `https://63de507d9fa0d60060fc8e1c.mockapi.io/items?page=${currentPage}&limit=4&${
         categoryId > 0 ? `category=${categoryId}` : ""
       }&sortBy=${choicenSort.sortProperty}&order=desc&filter=${searchValue}`
     )
@@ -35,11 +35,12 @@ function Home({ searchValue }) {
         return data.json();
       })
       .then((jsonData) => {
+        debugger;
         setIsPizzaLoading(false);
         setPizzaData(jsonData);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, choicenSort, searchValue]);
+  }, [categoryId, choicenSort, searchValue, currentPage]);
 
   return (
     <div className="container">
@@ -76,7 +77,7 @@ function Home({ searchValue }) {
                 )
               })}
       </div>
-      <Pagination />
+      <Pagination onChangePage={(number) => setCurrentPage(number)} />
     </div>
   );
 }

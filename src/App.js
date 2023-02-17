@@ -1,6 +1,6 @@
 import "./scss/app.scss";
 import Header from "./components/Header";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Home from "./pages/Home";
 import Backet from "./pages/Backet";
 import NotFound from "./pages/NotFound";
@@ -18,7 +18,7 @@ function App() {
         />
         <div className="content">
           <Routes>
-            <Route element={<Home searchValue={searchValue}/>} path="/home" />
+            <Route element={<Home searchValue={searchValue} />} path="/home" />
             <Route element={<Backet />} path="/backet" />
             <Route element={<NotFound />} path="/*" />
           </Routes>
