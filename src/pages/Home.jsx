@@ -5,8 +5,9 @@ import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBLock/Skeleton";
 import PizzaBlock from "../components/PizzaBLock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
+import { SearchContext } from '../App'
 
-function Home({ searchValue }) {
+function Home() {
   let [isPizzaLoading, setIsPizzaLoading] = useState(true);
   let [pizzaData, setPizzaData] = useState();
   let [categoryId, setCategoryId] = useState(0);
@@ -15,6 +16,7 @@ function Home({ searchValue }) {
     sortProperty: "rating",
   });
   let [currentPage, setCurrentPage] = useState(1);
+  let [searchValue] = React.useContext(SearchContext);
 
   function onSetCategoryId(value) {
     setCategoryId(value);
