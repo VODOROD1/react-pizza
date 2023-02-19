@@ -1,16 +1,27 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBLock/Skeleton";
 import PizzaBlock from "../components/PizzaBLock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
-import { SearchContext } from '../App'
+import { SearchContext } from "../App";
+import { setCategoryId } from "../redux/filterSlice";
 
 function Home() {
+  const categoryId = useSelector((state) => state?.filterReducer?.categoryId);
+  const dispatch = useDispatch();
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryId(id));
+  };
+  // const setCategoryId = () => {
+
+  // }
+
   let [isPizzaLoading, setIsPizzaLoading] = useState(true);
   let [pizzaData, setPizzaData] = useState();
-  let [categoryId, setCategoryId] = useState(0);
+  // let [categoryId, setCategoryId] = useState(0);
   let [choicenSort, choiceSort] = useState({
     name: "популярности",
     sortProperty: "rating",
@@ -18,9 +29,9 @@ function Home() {
   let [currentPage, setCurrentPage] = useState(1);
   let [searchValue] = React.useContext(SearchContext);
 
-  function onSetCategoryId(value) {
-    setCategoryId(value);
-  }
+  // function onSetCategoryId(value) {
+  //   setCategoryId(value);
+  // }
 
   function onChoiceSort(obj) {
     choiceSort(obj);
@@ -47,7 +58,10 @@ function Home() {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories categoryId={categoryId} onSetCategoryId={onSetCategoryId} />
+        <Categories
+          categoryId={categoryId}
+          onSetCategoryId={onChangeCategory}
+        />
         <Sort choicenSort={choicenSort} onChoiceSort={onChoiceSort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
@@ -76,7 +90,7 @@ function Home() {
                     category={elem.category}
                     rating={elem.rating}
                   />
-                )
+                );
               })}
       </div>
       <Pagination onChangePage={(number) => setCurrentPage(number)} />
