@@ -1,59 +1,103 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import qs from "qs";
+import { useNavigate } from "react-router-dom";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
+import { sortGlossary } from "../components/Sort";
 import Skeleton from "../components/PizzaBLock/Skeleton";
 import PizzaBlock from "../components/PizzaBLock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
 import { SearchContext } from "../App";
-import { setCategoryId } from "../redux/filterSlice";
+import {
+  setCategoryId,
+  setCurrentPage,
+  setFilters,
+} from "../redux/filterSlice";
 
 function Home() {
+  const isSearch = React.useRef(false);
+  const isMounted = React.useRef(false);
+  const navigate = useNavigate();
   const categoryId = useSelector((state) => state?.filterReducer?.categoryId);
+  const sortType = useSelector(
+    (state) => state?.filterReducer?.sort.sortProperty
+  );
+  const currentPage = useSelector((state) => state?.filterReducer?.currentPage);
   const dispatch = useDispatch();
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
   };
-  // const setCategoryId = () => {
-
-  // }
-
+  const onSetCurrentPage = (number) => {
+    dispatch(setCurrentPage(number));
+  };
   let [isPizzaLoading, setIsPizzaLoading] = useState(true);
   let [pizzaData, setPizzaData] = useState();
-  // let [categoryId, setCategoryId] = useState(0);
-  let [choicenSort, choiceSort] = useState({
-    name: "популярности",
-    sortProperty: "rating",
-  });
-  let [currentPage, setCurrentPage] = useState(1);
+  // let [currentPage, setCurrentPage] = useState(1);
   let [searchValue] = React.useContext(SearchContext);
 
-  // function onSetCategoryId(value) {
-  //   setCategoryId(value);
+  // const setCurrentPageHandler = (page) => {
+  //   setCurrentPage
   // }
 
-  function onChoiceSort(obj) {
-    choiceSort(obj);
-  }
-
-  useEffect(() => {
+  const fetchData = () => {
     setIsPizzaLoading(true);
     fetch(
       `https://63de507d9fa0d60060fc8e1c.mockapi.io/items?page=${currentPage}&limit=4&${
         categoryId > 0 ? `category=${categoryId}` : ""
-      }&sortBy=${choicenSort.sortProperty}&order=desc&filter=${searchValue}`
+      }&sortBy=${sortType}&order=desc&filter=${searchValue}`
     )
       .then((data) => {
         return data.json();
       })
       .then((jsonData) => {
-        debugger;
         setIsPizzaLoading(false);
         setPizzaData(jsonData);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, choicenSort, searchValue, currentPage]);
+  };
+
+  // Если изменили параметры и был первый рендер
+  useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sortType,
+        categoryId,
+        currentPage,
+      });
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [categoryId, sortType, searchValue, currentPage]);
+
+  // Если был первый рендер, то проверяем URL-параметры и сохраняем в redux
+  useEffect(() => {
+    if (window.location.search) {
+      let params = qs.parse(window.location.search.substring(1));
+      const sort = sortGlossary.find(
+        (obj) => obj.sortProperty === params.sortProperty
+      );
+
+      dispatch(
+        setFilters({
+          ...params,
+          sort,
+        })
+      );
+      isSearch.current = false;
+    }
+  }, []);
+
+  // Если был первый рендер, то запрашиваем пиццы
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (!isSearch.current) {
+      fetchData();
+    }
+
+    isSearch.current = false;
+  }, [categoryId, sortType, searchValue, currentPage]);
 
   return (
     <div className="container">
@@ -62,7 +106,7 @@ function Home() {
           categoryId={categoryId}
           onSetCategoryId={onChangeCategory}
         />
-        <Sort choicenSort={choicenSort} onChoiceSort={onChoiceSort} />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
@@ -93,7 +137,7 @@ function Home() {
                 );
               })}
       </div>
-      <Pagination onChangePage={(number) => setCurrentPage(number)} />
+      <Pagination onChangePage={(number) => onSetCurrentPage(number)} />
     </div>
   );
 }

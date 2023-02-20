@@ -1,28 +1,34 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSort } from "../redux/filterSlice";
 
-function Sort({ choicenSort, onChoiceSort }) {
+// choicenSort={choicenSort} onChoiceSort={onChoiceSort}
+export const sortGlossary = [
+  {
+    name: "популярности",
+    sortProperty: "rating",
+  },
+  {
+    name: "цене",
+    sortProperty: "price",
+  },
+  {
+    name: "алфавиту",
+    sortProperty: "title",
+  },
+];
+
+function Sort() {
+  let choicenSort = useSelector((state) => state.filterReducer.sort);
+  const dispatch = useDispatch();
   let [open, openClose] = useState(true);
   // let [choicenSort, choiceSort] = useState(0);
 
-  function choiceSortHandler(index) {
+  function choiceSortHandler(obj) {
+    debugger;
     openClose(false);
-    onChoiceSort(index);
+    dispatch(setSort(obj));
   }
-
-  const sortGlossary = [
-    {
-      name: "популярности",
-      sortProperty: "rating",
-    },
-    {
-      name: "цене",
-      sortProperty: "price",
-    },
-    {
-      name: "алфавиту",
-      sortProperty: "title",
-    },
-  ];
 
   return (
     <div className="sort">
