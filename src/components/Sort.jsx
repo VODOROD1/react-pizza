@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from "../redux/filterSlice";
 
-// choicenSort={choicenSort} onChoiceSort={onChoiceSort}
 export const sortGlossary = [
   {
     name: "популярности",
@@ -21,14 +20,46 @@ export const sortGlossary = [
 function Sort() {
   let choicenSort = useSelector((state) => state.filterReducer.sort);
   const dispatch = useDispatch();
-  let [open, openClose] = useState(true);
-  // let [choicenSort, choiceSort] = useState(0);
+  let [open, openClose] = useState();
+  const sortRef = React.useRef();
 
   function choiceSortHandler(obj) {
     debugger;
     openClose(false);
     dispatch(setSort(obj));
   }
+
+  // const onBlur = (e) => {
+  //   debugger;
+  //   if (e.target.tagName !== "LI" && e.target.tagName !== "SPAN") {
+  //     openClose(false);
+  //   }
+
+  //   if (e.target.tagName === "SPAN" && open) {
+  //     openClose(false);
+  //   }
+  // };
+
+  React.useEffect(() => {
+    const handleClickOutside = (e) => {
+      debugger;
+      if (e.target.tagName !== "LI" && e.target.tagName !== "SPAN") {
+        openClose(false);
+        console.log("Click outside!");
+      }
+
+      if (e.target.tagName === "SPAN" && open) {
+        openClose(false);
+        console.log("Click outside!");
+      }
+    };
+
+    document.body.addEventListener("click", handleClickOutside);
+    // document.body.addEventListener("click", onBlur);
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="sort">
@@ -46,10 +77,7 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => openClose(!open)}>
-          {/* {sortGlossary[choicenSort].name} */}
-          {choicenSort.name}
-        </span>
+        <span onClick={() => openClose(!open)}>{choicenSort.name}</span>
       </div>
       {open && (
         <div
