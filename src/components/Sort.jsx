@@ -24,25 +24,12 @@ function Sort() {
   const sortRef = React.useRef();
 
   function choiceSortHandler(obj) {
-    debugger;
     openClose(false);
     dispatch(setSort(obj));
   }
 
-  // const onBlur = (e) => {
-  //   debugger;
-  //   if (e.target.tagName !== "LI" && e.target.tagName !== "SPAN") {
-  //     openClose(false);
-  //   }
-
-  //   if (e.target.tagName === "SPAN" && open) {
-  //     openClose(false);
-  //   }
-  // };
-
   React.useEffect(() => {
     const handleClickOutside = (e) => {
-      debugger;
       if (e.target.tagName !== "LI" && e.target.tagName !== "SPAN") {
         openClose(false);
         console.log("Click outside!");

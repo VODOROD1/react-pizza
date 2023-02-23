@@ -3,7 +3,7 @@ import React from 'react';
 import Header from "./components/Header";
 import { useState } from "react";
 import Home from "./pages/Home";
-import Backet from "./pages/Backet";
+import Backet from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
@@ -26,7 +26,7 @@ function App() {
           <div className="content">
             <Routes>
               <Route element={<Home />} path="/home" />
-              <Route element={<Backet />} path="/backet" />
+              <Route element={<Backet />} path="/cart" />
               <Route element={<NotFound />} path="/*" />
             </Routes>
           </div>

@@ -126,6 +126,7 @@ function Home() {
                 return (
                   <PizzaBlock
                     key={elem.id}
+                    id={elem.id}
                     imageUrl={elem.imageUrl}
                     name={elem.name}
                     types={elem.types}

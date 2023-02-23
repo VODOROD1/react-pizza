@@ -4,7 +4,6 @@ import styles from "./Pagination.module.scss";
 
 function Pagination({onChangePage}) {
   const handlePageClick = (event) => {
-    debugger;
     onChangePage(event.selected + 1);
   };
 

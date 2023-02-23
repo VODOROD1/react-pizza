@@ -1,40 +1,65 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// const item = {
+//   id,
+//   name,
+//   price,
+//   imageUrl,
+//   type: typesGlossary[activeType],
+//   size: activeSize,
+//   count
+// };
+
 const initialState = {
-  categoryId: 0,
-  sort: {
-    name: "популярности",
-    sortProperty: "rating",
-  },
-  currentPage: 1,
+  totalPrice: 0,
+  totalCount: 0,
+  items: []
 };
 
-const filterSlice = createSlice({
-  name: "filterSlice",
+const cartSlice = createSlice({
+  name: "cart",
   initialState,
   reducers: {
-    setCategoryId(state, action) {
-      state.categoryId = action.payload;
+    // addItem(state, action) {
+    //   state.totalPrice += action.payload.price;
+    //   debugger;
+    //   state.items.push(action.payload);
+    // },
+    addItem(state, action) {
+      const findItem = state.items.find(obj => obj.id === action.payload.id);
+      if(findItem) {
+        findItem.count++;
+      } else {
+        state.items.push({
+          ...action.payload,
+          count: 1
+        });
+      }
+
+      state.totalPrice += action.payload.price;
+      state.totalCount++;
     },
-    setSort(state, action) {
-      state.sort = action.payload;
+    removeItem(state, action) {
+      state.items = state.items.filter((item => {
+        if(item.id !== action.payload) {
+          return true;
+        } else {
+          state.totalPrice -= item.price;
+          return false;
+        }
+      }))
     },
-    setCurrentPage(state, action) {
-      state.currentPage = action.payload;
-    },
-    setFilters(state, action) {
-      state.categoryId = Number(action.payload.categoryId);
-      state.sort = action.payload.sort;
-      state.currentPage = Number(action.payload.currentPage);
-    },
+    clearItems(state) {
+      state.items = [];
+      state.totalPrice = 0;
+    }
   },
 });
 
 export const {
-  setCategoryId, 
-  setSort, 
-  setCurrentPage, 
-  setFilters
-} = filterSlice.actions;
+  addItem,
+  removeItem,
+  clearItems
+} = cartSlice.actions;
 
-export default filterSlice.reducer;
+export default cartSlice.reducer;
