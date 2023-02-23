@@ -62,7 +62,7 @@ function Header({ searchValue, setSearchValue }) {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>{cartData.count}</span>
+            <span>{cartData.totalCount}</span>
           </NavLink>
         </div>
       </div>

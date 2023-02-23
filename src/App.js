@@ -3,7 +3,7 @@ import React from 'react';
 import Header from "./components/Header";
 import { useState } from "react";
 import Home from "./pages/Home";
-import Backet from "./pages/Cart";
+import Backet from "./pages/Cart/Cart";
 import NotFound from "./pages/NotFound";
 import { Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
