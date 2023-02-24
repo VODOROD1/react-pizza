@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import { sortGlossary } from "../components/Sort";
@@ -41,20 +42,17 @@ function Home() {
   //   setCurrentPage
   // }
 
-  const fetchData = () => {
+  const fetchData = async () => {
     setIsPizzaLoading(true);
-    fetch(
+    await axios.get(
       `https://63de507d9fa0d60060fc8e1c.mockapi.io/items?page=${currentPage}&limit=4&${
         categoryId > 0 ? `category=${categoryId}` : ""
       }&sortBy=${sortType}&order=desc&filter=${searchValue}`
-    )
-      .then((data) => {
-        return data.json();
-      })
-      .then((jsonData) => {
-        setIsPizzaLoading(false);
-        setPizzaData(jsonData);
-      });
+    ).then((res) => {
+      debugger;
+      setIsPizzaLoading(false);
+      setPizzaData(res.data);
+    });
     window.scrollTo(0, 0);
   };
 

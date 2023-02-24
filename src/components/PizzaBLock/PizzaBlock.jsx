@@ -31,7 +31,7 @@ function PizzaBlock({
       price,
       imageUrl,
       type: typesGlossary[activeType],
-      size: activeSize,
+      size: sizes[activeSize],
       count: 0
     };
 

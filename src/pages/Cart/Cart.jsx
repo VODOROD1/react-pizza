@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearItems } from "../../redux/cartSlice";
 import CartItem from './CartItem';
+import CartEmpty from './CartEmpty';
 
 function Cart() {
   const dispatch = useDispatch();
@@ -11,12 +12,16 @@ function Cart() {
   const totalPrice = useSelector(state => state.cartReducer.totalPrice);
 
   const onClearCart = () => {
-    dispatch(clearItems());
+    if(window.confirm('Очистить корзину?')) {
+      dispatch(clearItems());
+    }
   }
 
   return (
     <div className="container container--cart">
-      <div className="cart">
+      {
+        items.length !== 0 ? 
+        <div className="cart">
         <div className="cart__top">
           <h2 className="content__title">
             <svg
@@ -137,7 +142,10 @@ function Cart() {
             </div>
           </div>
         </div>
-      </div>
+      </div> :
+      <CartEmpty />
+      }
+      
     </div>
   );
 }
