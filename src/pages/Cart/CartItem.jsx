@@ -1,6 +1,34 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addItem, removeItems, removeOneItem } from "../../redux/cartSlice";
 
-export const CartItem = ({item}) => {
+export const CartItem = ({ item }) => {
+  const dispatch = useDispatch();
+
+  const onClickMinus = () => {
+    dispatch(
+      removeOneItem({
+        id: item.id,
+      })
+    );
+  };
+
+  const onClickPlus = () => {
+    dispatch(
+      addItem({
+        id: item.id,
+      })
+    );
+  };
+
+  const onClickCross = () => {
+    dispatch(
+      removeItems({
+        id: item.id,
+      })
+    );
+  };
+
   return (
     <div className="cart__item">
       <div className="cart__item-img">
@@ -15,7 +43,16 @@ export const CartItem = ({item}) => {
         <p>{item.type}, 26 см.</p>
       </div>
       <div className="cart__item-count">
-        <div className="button button--outline button--circle cart__item-count-minus">
+        <div
+          onClick={onClickMinus}
+          className={`
+            button
+            button--outline
+            button--circle
+            cart__item-count-minus
+            ${item.count == 0 && 'disabledbutton'}
+          `}
+        >
           <svg
             width="10"
             height="10"
@@ -34,7 +71,10 @@ export const CartItem = ({item}) => {
           </svg>
         </div>
         <b>{item.count}</b>
-        <div className="button button--outline button--circle cart__item-count-plus">
+        <div
+          onClick={onClickPlus}
+          className="button button--outline button--circle cart__item-count-plus"
+        >
           <svg
             width="10"
             height="10"
@@ -57,7 +97,10 @@ export const CartItem = ({item}) => {
         <b>{item.price} ₽</b>
       </div>
       <div className="cart__item-remove">
-        <div className="button button--outline button--circle">
+        <div
+          onClick={onClickCross}
+          className="button button--outline button--circle"
+        >
           <svg
             width="10"
             height="10"
@@ -79,6 +122,5 @@ export const CartItem = ({item}) => {
     </div>
   );
 };
-
 
 export default CartItem;

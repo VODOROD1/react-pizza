@@ -39,9 +39,9 @@ const cartSlice = createSlice({
       state.totalPrice += action.payload.price;
       state.totalCount++;
     },
-    removeItem(state, action) {
+    removeItems(state, action) {
       state.items = state.items.filter((item => {
-        if(item.id !== action.payload) {
+        if(item.id !== action.payload.id) {
           return true;
         } else {
           state.totalPrice -= item.price;
@@ -49,16 +49,29 @@ const cartSlice = createSlice({
         }
       }))
     },
+    removeOneItem(state, action) {
+      state.items = state.items.map((item => {
+        debugger
+        if(item.id === action.payload.id) {
+          state.totalPrice -= item.price;
+          return {...item, count: item.count-1};
+        } else {
+          return item;
+        }
+      }))
+    },
     clearItems(state) {
       state.items = [];
       state.totalPrice = 0;
+      state.totalCount = 0;
     }
   },
 });
 
 export const {
   addItem,
-  removeItem,
+  removeItems,
+  removeOneItem,
   clearItems
 } = cartSlice.actions;
 

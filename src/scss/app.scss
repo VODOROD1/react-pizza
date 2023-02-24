@@ -6,6 +6,11 @@ body {
   background-color: $background;
 }
 
+.disabledbutton {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 .wrapper {
   width: calc(100vw - 100px);
   height: 100%;
