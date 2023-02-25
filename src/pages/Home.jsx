@@ -16,6 +16,7 @@ import {
   setCurrentPage,
   setFilters,
 } from "../redux/filterSlice";
+import { setPizzasItems } from "../redux/pizzaSlice";
 
 function Home() {
   const isSearch = React.useRef(false);
@@ -26,6 +27,7 @@ function Home() {
     (state) => state?.filterReducer?.sort.sortProperty
   );
   const currentPage = useSelector((state) => state?.filterReducer?.currentPage);
+  const pizzaData = useSelector(state => state.pizzasReducer.items);
   const dispatch = useDispatch();
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -34,7 +36,7 @@ function Home() {
     dispatch(setCurrentPage(number));
   };
   let [isPizzaLoading, setIsPizzaLoading] = useState(true);
-  let [pizzaData, setPizzaData] = useState();
+  // let [pizzaData, setPizzaData] = useState();
   // let [currentPage, setCurrentPage] = useState(1);
   let [searchValue] = React.useContext(SearchContext);
 
@@ -44,15 +46,22 @@ function Home() {
 
   const fetchData = async () => {
     setIsPizzaLoading(true);
-    await axios.get(
-      `https://63de507d9fa0d60060fc8e1c.mockapi.io/items?page=${currentPage}&limit=4&${
-        categoryId > 0 ? `category=${categoryId}` : ""
-      }&sortBy=${sortType}&order=desc&filter=${searchValue}`
-    ).then((res) => {
+    try {
+      const res = await axios.get(
+        `https://63de507d9fa0d60060fc8e1c.mockapi.io/items?page=${currentPage}&limit=4&${
+          categoryId > 0 ? `category=${categoryId}` : ""
+        }&sortBy=${sortType}&order=desc&filter=${searchValue}`
+      );
       debugger;
+      dispatch(setPizzasItems(res.data));
+    } catch (error) {
+      debugger;
+      alert("Ошибка при получении пицц!");
+      console.log("ERROR", error);
+    } finally {
       setIsPizzaLoading(false);
-      setPizzaData(res.data);
-    });
+    }
+
     window.scrollTo(0, 0);
   };
 
