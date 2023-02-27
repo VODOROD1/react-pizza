@@ -45,13 +45,6 @@ const cartSlice = createSlice({
     },
     addItemFromCart(state, action) {
       const findItem = state.items.find((obj) => obj.id === action.payload.id);
-
-      // let temp = state.items.map(item => {
-      //   return {
-      //     id: item.id,
-      //     size: item.size
-      //   }
-      // })
       state.items.forEach((item) => {
         if (
           item.id === action.payload.id &&
@@ -62,29 +55,6 @@ const cartSlice = createSlice({
           state.totalPrice += item.price;
         }
       });
-      // debugger;
-      // if(findItem) {
-      //   debugger;
-      //   if(findItem.size === action.payload.size) {
-      //     debugger
-      //     findItem.count++;
-      //     state.totalPrice += findItem.price;
-      //   }
-      // else {
-      //   state.items.push({
-      //     ...findItem,
-      //     size: action.payload.size,
-      //     count: 1
-      //   });
-      // }
-      // }
-      // else {
-      //   state.items.push({
-      //     ...action.payload,
-      //     count: 1
-      //   });
-      //   state.totalPrice += action.payload.price;
-      // }
       state.totalCount++;
     },
     removeItems(state, action) {

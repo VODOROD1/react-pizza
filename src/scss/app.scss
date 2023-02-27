@@ -48,6 +48,22 @@ body {
     align-items: center;
     justify-content: space-between;
   }
+
+  &__error {
+    margin: 100px auto;
+    width: 580px;
+    text-align: center;
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+  }
 }
 
 .container {
