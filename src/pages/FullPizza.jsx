@@ -1,35 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const FullPizza = () => {
+  const [pizza, setPizza] = useState(undefined);
   const { id } = useParams();
-  const [item, setItem] = useState(undefined);
   debugger;
 
   useEffect(() => {
-    async function getItem() {
-      return await axios.get(
-        `https://63de507d9fa0d60060fc8e1c.mockapi.io/items/5`
-      );
+    try {
+      async function getPizza() {
+        let receivedItem = await axios.get(
+          `https://63de507d9fa0d60060fc8e1c.mockapi.io/items/${id}`
+        );
+        debugger;
+        setPizza(receivedItem.data);
+      }
+      getPizza();
+    } catch (error) {
+      console.log(error);
     }
-    let receivedItem = getItem();
-    setItem(receivedItem);
-  });
+  }, []);
 
   return (
     <div>
-      {item ? (
+      {pizza ? (
         <div>
           <img src="" />
-          <h2>{item.id}</h2>
-          <p>{item.name}</p>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente
-            reprehenderit provident facere veniam cumque aliquam consectetur.
-            Maiores beatae nemo officiis harum, unde rerum totam aperiam,
-            recusandae mollitia praesentium saepe inventore!
-          </p>
-          <h4>350 Р</h4>
+          <h2><img src={pizza.imageUrl} /></h2>
+          <h2>{pizza.name}</h2>
+          <p>{pizza.price} Р</p>
         </div>
       ) : (
         <div>Загрузка...</div>

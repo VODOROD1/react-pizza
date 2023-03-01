@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import qs from "qs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import { sortGlossary } from "../components/Sort";
@@ -133,17 +133,18 @@ function Home() {
                 })
                 .map((elem) => {
                   return (
-                    <PizzaBlock
-                      key={elem.id}
-                      id={elem.id}
-                      imageUrl={elem.imageUrl}
-                      name={elem.name}
-                      types={elem.types}
-                      sizes={elem.sizes}
-                      price={elem.price}
-                      category={elem.category}
-                      rating={elem.rating}
-                    />
+                    <NavLink to={`/pizza/${elem.id}`} key={elem.id}>
+                      <PizzaBlock
+                        id={elem.id}
+                        imageUrl={elem.imageUrl}
+                        name={elem.name}
+                        types={elem.types}
+                        sizes={elem.sizes}
+                        price={elem.price}
+                        category={elem.category}
+                        rating={elem.rating}
+                      />
+                    </NavLink>
                   );
                 })}
         </div>
