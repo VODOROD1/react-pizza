@@ -1,9 +1,8 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import { sortGlossary } from "../components/Sort";

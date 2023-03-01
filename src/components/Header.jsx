@@ -1,10 +1,11 @@
 import React from "react";
 import pizzaSvg from "../assets/img/pizza-logo.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Search } from "./Search/Search";
 import { useSelector } from "react-redux";
+import { SearchContext } from "../App";
 
-function Header({ searchValue, setSearchValue }) {
+function Header() {
   const cartData = useSelector((state) => {
     return {
       totalPrice: state.cartReducer.totalPrice,
@@ -12,6 +13,13 @@ function Header({ searchValue, setSearchValue }) {
       count: state.cartReducer.items.length
     }
   });
+
+  const location = useLocation();
+  debugger;
+
+  const pathName = window.location.pathname;
+
+  let [ searchValue, setSearchValue ] = React.useContext(SearchContext);
 
   return (
     <div className="header">
@@ -30,6 +38,9 @@ function Header({ searchValue, setSearchValue }) {
           setSearchValue={setSearchValue}
         ></Search>
         <div className="header__cart">
+        { 
+        location.pathname === '/cart' ?
+          <div></div> :
           <NavLink to="/cart" className="button button--cart">
             <span>{cartData.totalPrice} Р</span>
             <div className="button__delimiter"></div>
@@ -64,6 +75,7 @@ function Header({ searchValue, setSearchValue }) {
             </svg>
             <span>{cartData.totalCount}</span>
           </NavLink>
+          }
         </div>
       </div>
     </div>
