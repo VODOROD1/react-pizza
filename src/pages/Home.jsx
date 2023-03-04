@@ -9,13 +9,13 @@ import { sortGlossary } from "../components/Sort";
 import Skeleton from "../components/PizzaBLock/Skeleton";
 import PizzaBlock from "../components/PizzaBLock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
-import { SearchContext } from "../App";
 import {
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../redux/filterSlice";
 import { fetchPizzas } from "../redux/pizzaSlice";
+import { SearchContext } from "../layouts/MainLayout";
 
 function Home() {
   const isSearch = React.useRef(false);
@@ -133,18 +133,17 @@ function Home() {
                 })
                 .map((elem) => {
                   return (
-                    <NavLink to={`/pizza/${elem.id}`} key={elem.id}>
-                      <PizzaBlock
-                        id={elem.id}
-                        imageUrl={elem.imageUrl}
-                        name={elem.name}
-                        types={elem.types}
-                        sizes={elem.sizes}
-                        price={elem.price}
-                        category={elem.category}
-                        rating={elem.rating}
-                      />
-                    </NavLink>
+                    <PizzaBlock
+                      key={elem.id}
+                      id={elem.id}
+                      imageUrl={elem.imageUrl}
+                      name={elem.name}
+                      types={elem.types}
+                      sizes={elem.sizes}
+                      price={elem.price}
+                      category={elem.category}
+                      rating={elem.rating}
+                    />
                   );
                 })}
         </div>

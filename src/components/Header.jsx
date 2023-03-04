@@ -3,7 +3,7 @@ import pizzaSvg from "../assets/img/pizza-logo.svg";
 import { NavLink, useLocation } from "react-router-dom";
 import { Search } from "./Search/Search";
 import { useSelector } from "react-redux";
-import { SearchContext } from "../App";
+import { SearchContext } from "../layouts/MainLayout";
 
 function Header() {
   const cartData = useSelector((state) => {

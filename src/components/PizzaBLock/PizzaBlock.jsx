@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/cartSlice";
+import { NavLink } from "react-router-dom";
 
 let typesGlossary = ["тонкое", "традиционное"];
 
-function PizzaBlock({
-  id,
-  imageUrl,
-  name,
-  types,
-  sizes,
-  price
-}) {
-
+function PizzaBlock({ id, imageUrl, name, types, sizes, price }) {
   let [activeType, setActiveType] = useState(0);
   let [activeSize, setActiveSize] = useState(0);
   const dispatch = useDispatch();
@@ -32,7 +25,7 @@ function PizzaBlock({
       imageUrl,
       type: typesGlossary[activeType],
       size: sizes[activeSize],
-      count: 0
+      count: 0,
     };
 
     dispatch(addItem(item));
@@ -40,8 +33,10 @@ function PizzaBlock({
 
   return (
     <div className="pizza-block">
-      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-      <h4 className="pizza-block__title">{name}</h4>
+      <NavLink to={`/pizza/${id}`}>
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <h4 className="pizza-block__title">{name}</h4>
+      </NavLink>
       <div className="pizza-block__selector">
         <ul>
           {types.map((typeId) => {
