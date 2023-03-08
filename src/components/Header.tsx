@@ -4,8 +4,6 @@ import { NavLink, useLocation } from "react-router-dom";
 import { Search } from "./Search/Search";
 import { useSelector } from "react-redux";
 
-// const pizzaSvg = require("../assets/img/pizza-logo.svg") as string;
-
 const Header: React.FC = () => {
   const cartData = useSelector((state: any) => {
     return {
@@ -16,7 +14,6 @@ const Header: React.FC = () => {
   });
 
   const location = useLocation();
-  debugger;
 
   return (
     <div className="header">

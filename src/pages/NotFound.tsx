@@ -1,6 +1,6 @@
 import React from "react";
 
-function NotFound() {
+const NotFound: React.FC = () => {
   return <h1>Ничего не найдено!</h1>;
 }
 

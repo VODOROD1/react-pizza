@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Categories({ categoryId, onSetCategoryId }) {
+type CategoryProps = {
+    categoryId: number,
+    onSetCategoryId: any
+}
+
+const Categories: React.FC<CategoryProps> = ({ categoryId, onSetCategoryId }) => {
     // let [activeIndex, setActiveIndex] = useState(0);
     const categoriesData = [
         'Все',

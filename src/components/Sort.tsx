@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from "../redux/filterSlice";
 
-export const sortGlossary = [
+type SortItem = {
+  name: string,
+  sortProperty: string
+}
+
+export const sortGlossary: SortItem[] = [
   {
     name: "популярности",
     sortProperty: "rating",
@@ -17,11 +22,11 @@ export const sortGlossary = [
   },
 ];
 
-function Sort() {
-  let choicenSort = useSelector((state) => state.filterReducer.sort);
+const Sort: React.FC = () => {
+  let choicenSort = useSelector((state: any) => state.filterReducer.sort);
   const dispatch = useDispatch();
-  let [open, openClose] = useState();
-  const sortRef = React.useRef();
+  let [open, openClose] = useState<boolean>();
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   function choiceSortHandler(obj) {
     openClose(false);
@@ -49,7 +54,7 @@ function Sort() {
   }, []);
 
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"

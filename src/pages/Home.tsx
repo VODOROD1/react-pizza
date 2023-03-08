@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import qs from "qs";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import { sortGlossary } from "../components/Sort";
@@ -17,19 +17,28 @@ import {
 import { fetchPizzas } from "../redux/pizzaSlice";
 import { SearchContext } from "../layouts/MainLayout";
 
+export type PizzaItemType = {
+  id: number,
+  imageUrl: string,
+  name: string,
+  types: string[],
+  sizes: string[],
+  price: number
+}
+
 function Home() {
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
   const navigate = useNavigate();
-  const categoryId = useSelector((state) => state?.filterReducer?.categoryId);
+  const categoryId = useSelector((state: any) => state?.filterReducer?.categoryId);
   const sortType = useSelector(
-    (state) => state?.filterReducer?.sort.sortProperty
+    (state: any) => state?.filterReducer?.sort.sortProperty
   );
-  const currentPage = useSelector((state) => state?.filterReducer?.currentPage);
-  const pizzaData = useSelector((state) => state?.pizzaReducer?.items);
-  const status = useSelector((state) => state?.pizzaReducer?.status);
+  const currentPage = useSelector((state: any) => state?.filterReducer?.currentPage);
+  const pizzaData = useSelector((state: any) => state?.pizzaReducer?.items);
+  const status = useSelector((state: any) => state?.pizzaReducer?.status);
   const errorMessage = useSelector(
-    (state) => state?.pizzaReducer?.errorMessage
+    (state: any) => state?.pizzaReducer?.errorMessage
   );
   const dispatch = useDispatch();
   const onChangeCategory = (id) => {
@@ -49,6 +58,7 @@ function Home() {
 
   const fetchData = async () => {
     dispatch(
+      /* @ts-ignore */
       fetchPizzas({
         currentPage,
         categoryId,
@@ -113,14 +123,14 @@ function Home() {
       {status === "error" ? (
         <div className="content__error">
           <h2>
-            Произошла ошибка! <icon>😕</icon>
+            Произошла ошибка! <span>😕</span>
           </h2>
           <p>{errorMessage}</p>
         </div>
       ) : (
         <div className="content__items">
           {status === "loading"
-            ? [1, 2, 3, 4].map((elem, index) => <Skeleton key={index} />)
+            ? [1, 2, 3, 4].map((_elem: number, index: number) => <Skeleton key={index} />)
             : pizzaData
                 ?.filter((elem) => {
                   if (
@@ -131,7 +141,7 @@ function Home() {
                     return false;
                   }
                 })
-                .map((elem) => {
+                .map((elem: PizzaItemType) => {
                   return (
                     <PizzaBlock
                       key={elem.id}
@@ -141,8 +151,6 @@ function Home() {
                       types={elem.types}
                       sizes={elem.sizes}
                       price={elem.price}
-                      category={elem.category}
-                      rating={elem.rating}
                     />
                   );
                 })}

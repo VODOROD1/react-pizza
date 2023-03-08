@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearItems } from "../../redux/cartSlice";
@@ -14,7 +15,7 @@ export interface CartItemType {
   type: string
 }
 
-function Cart() {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const items: CartItemType[] = useSelector((state: any): CartItemType[] => state.cartReducer.items);
   debugger;
@@ -109,7 +110,7 @@ function Cart() {
         <div className="content__items">
           {items.map((item: CartItemType) => {
             return (
-              <CartItem key={item.id} item={item}/>
+              <CartItem key={item.id} {...item}/>
             );
           })}
         </div>

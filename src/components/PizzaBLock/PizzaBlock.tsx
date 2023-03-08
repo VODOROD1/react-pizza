@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/cartSlice";
 import { NavLink } from "react-router-dom";
+import { PizzaItemType } from "../../pages/Home";
 
 let typesGlossary = ["тонкое", "традиционное"];
 
-function PizzaBlock({ id, imageUrl, name, types, sizes, price }) {
+const PizzaBlock: React.FC<PizzaItemType> = ({ id, imageUrl, name, types, sizes, price }) => {
   let [activeType, setActiveType] = useState(0);
   let [activeSize, setActiveSize] = useState(0);
   const dispatch = useDispatch();
-  const currentPizza = useSelector((state) => {
+  const currentPizza = useSelector((state: any) => {
     debugger;
     return state.cartReducer.items.find((obj) => obj.id === id);
   });
@@ -43,9 +44,9 @@ function PizzaBlock({ id, imageUrl, name, types, sizes, price }) {
             return (
               <li
                 key={typeId}
-                className={activeType == typeId ? "active" : ""}
+                className={Number(activeType) === Number(typeId) ? "active" : ""}
                 onClick={() => {
-                  setActiveType(typeId);
+                  setActiveType(Number(typeId));
                 }}
               >
                 {typesGlossary[typeId]}

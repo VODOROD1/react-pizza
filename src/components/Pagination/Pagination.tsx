@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactPaginate from "react-paginate";
 import styles from "./Pagination.module.scss";
 
-function Pagination({onChangePage}) {
+const Pagination: React.FC<any> = ({onChangePage}) => {
   const handlePageClick = (event) => {
     onChangePage(event.selected + 1);
   };
