@@ -3,10 +3,11 @@ import pizzaSvg from "../assets/img/pizza-logo.svg";
 import { NavLink, useLocation } from "react-router-dom";
 import { Search } from "./Search/Search";
 import { useSelector } from "react-redux";
-import { SearchContext } from "../layouts/MainLayout";
 
-function Header() {
-  const cartData = useSelector((state) => {
+// const pizzaSvg = require("../assets/img/pizza-logo.svg") as string;
+
+const Header: React.FC = () => {
+  const cartData = useSelector((state: any) => {
     return {
       totalPrice: state.cartReducer.totalPrice,
       totalCount: state.cartReducer.totalCount,
@@ -17,14 +18,10 @@ function Header() {
   const location = useLocation();
   debugger;
 
-  const pathName = window.location.pathname;
-
-  let [ searchValue, setSearchValue ] = React.useContext(SearchContext);
-
   return (
     <div className="header">
       <div className="container">
-        <NavLink to="/home">
+        <NavLink to="">
           <div className="header__logo">
             <img width="38" src={pizzaSvg} alt="Pizza logo" />
             <div>
@@ -34,8 +31,6 @@ function Header() {
           </div>
         </NavLink>
         <Search
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
         ></Search>
         <div className="header__cart">
         { 

@@ -1,15 +1,25 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearItems } from "../../redux/cartSlice";
 import CartItem from './CartItem';
 import CartEmpty from './CartEmpty';
 
+export interface CartItemType {
+  count: number,
+  id: string,
+  imageUrl: string,
+  name: string,
+  price: number, 
+  size: number,
+  type: string
+}
+
 function Cart() {
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.cartReducer.items);
-  const totalCount = useSelector(state => state.cartReducer.totalCount);
-  const totalPrice = useSelector(state => state.cartReducer.totalPrice);
+  const items: CartItemType[] = useSelector((state: any): CartItemType[] => state.cartReducer.items);
+  debugger;
+  const totalCount = useSelector((state: any) => state.cartReducer.totalCount);
+  const totalPrice = useSelector((state: any) => state.cartReducer.totalPrice);
 
   const onClearCart = () => {
     if(window.confirm('Очистить корзину?')) {
@@ -97,7 +107,7 @@ function Cart() {
           </div>
         </div>
         <div className="content__items">
-          {items.map((item) => {
+          {items.map((item: CartItemType) => {
             return (
               <CartItem key={item.id} item={item}/>
             );

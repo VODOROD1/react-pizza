@@ -1,13 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const CartEmpty = () => {
+const CartEmpty: React.FC = () => {
   return (
-    <div class="content">
-      <div class="container container--cart">
-        <div class="cart cart--empty">
+    <div className="content">
+      <div className="container container--cart">
+        <div className="cart cart--empty">
           <h2>
-            Корзина пустая <icon>😕</icon>
+            Корзина пустая <span>😕</span>
           </h2>
           <p>
             Вероятней всего, вы не заказывали ещё пиццу.
@@ -16,7 +16,7 @@ const CartEmpty = () => {
           </p>
           <img src="/img/empty-cart.png" alt="Empty cart" />
           <NavLink to="/home">
-            <span class="button button--black">Вернуться назад</span>
+            <span className="button button--black">Вернуться назад</span>
           </NavLink>
         </div>
       </div>

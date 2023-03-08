@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
-const FullPizza = () => {
-  const [pizza, setPizza] = useState(undefined);
+const FullPizza: React.FC = () => {
+  const [pizza, setPizza] = useState<{
+    imageUrl: string,
+    name: string,
+    price: number
+  }>();
+
   const { id } = useParams();
   const navigate = useNavigate();
   debugger;
@@ -29,9 +34,8 @@ const FullPizza = () => {
     <div>
       {pizza ? (
         <div>
-          <img src="" />
           <h2>
-            <img src={pizza.imageUrl} />
+            <img src={pizza.imageUrl} alt="pizza"/>
           </h2>
           <h2>{pizza.name}</h2>
           <p>{pizza.price} Р</p>

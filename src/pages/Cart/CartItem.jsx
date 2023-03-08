@@ -1,6 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addItemFromCart, removeItems, removeOneItem } from "../../redux/cartSlice";
+import {
+  addItemFromCart,
+  removeItems,
+  removeOneItem,
+} from "../../redux/cartSlice";
+import { CartItemType } from "./Cart";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -17,7 +22,7 @@ const CartItem = ({ item }) => {
     dispatch(
       addItemFromCart({
         id: item.id,
-        size: item.size
+        size: item.size,
       })
     );
   };
@@ -41,7 +46,9 @@ const CartItem = ({ item }) => {
       </div>
       <div className="cart__item-info">
         <h3>{item.name}</h3>
-        <p>{item.type}, {item.size} см.</p>
+        <p>
+          {item.type}, {item.size} см.
+        </p>
       </div>
       <div className="cart__item-count">
         <div
@@ -51,7 +58,7 @@ const CartItem = ({ item }) => {
             button--outline
             button--circle
             cart__item-count-minus
-            ${item.count == 0 && 'disabledbutton'}
+            ${item.count == 0 && "disabledbutton"}
           `}
         >
           <svg
