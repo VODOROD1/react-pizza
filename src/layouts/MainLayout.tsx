@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
 
-export const SearchContext = React.createContext();
+export const SearchContext = React.createContext<any>("");
 
-const MainLayout = () => {
-  const [searchValue, setSearchValue] = useState("");
+const MainLayout: React.FC = () => {
+  const [searchValue, setSearchValue] = useState<string>("");
 
   return (
     <div className="wrapper">
